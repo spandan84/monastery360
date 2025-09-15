@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Monastery360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prayer: {
+                            blue: '#4F46E5',
+                            white: '#FFFFFF',
+                            red: '#DC2626',
+                            green: '#059669',
+                            yellow: '#D97706'
+                        },
+                        monastery: {
+                            gold: '#F59E0B',
+                            copper: '#B45309',
+                            crimson: '#991B1B',
+                            earth: '#92400E'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="font-inter bg-gray-50">
+    <!--
+    PROMPTS BLOCK:
+    "Give tourists access to 360° tours, maps, booking options, and event calendars."
+    "Allow researchers to request access to archives, manuscripts, and high-resolution data."
+    "Enable users to save/bookmark monasteries and create a personal travel/learning plan."
+    "Add feedback, ratings, and comment features for monasteries."
+    "Show personalized recommendations (nearby monasteries, upcoming festivals, related manuscripts)."
+    "Track user activity (last visited monastery, favorites) for a personalized dashboard."
+    -->
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-prayer-blue">Monastery360</a>
+                    <div class="hidden md:flex items-center ml-8 space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-prayer-blue transition-colors">Dashboard</a>
+                        <a href="#" class="text-gray-700 hover:text-prayer-blue transition-colors">My Tours</a>
+                        <a href="#" class="text-gray-700 hover:text-prayer-blue transition-colors">Bookmarks</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-prayer-blue transition-colors">Contact</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="flex items-center text-gray-700 hover:text-prayer-blue" id="user-menu-trigger">
+                            <div class="w-8 h-8 bg-monastery-gold rounded-full flex items-center justify-center text-white text-sm font-semibold mr-2">
+                                <span id="user-initials">JD</span>
+                            </div>
+                            <span id="user-name">John Doe</span>
+                            <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </button>
+
+                        <!-- User Dropdown -->
+                        <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden">
+                            <div class="p-3 border-b border-gray-100">
+                                <div class="font-medium" id="dropdown-name">John Doe</div>
+                                <div class="text-sm text-gray-600" id="dropdown-role">Tourist</div>
+                            </div>
+                            <div class="py-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile Settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Preferences</a>
+                                <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                Welcome back, <span id="welcome-name">John</span>!
+            </h1>
+            <p class="text-gray-600" id="welcome-description">
+                Continue your spiritual journey through Sikkim's sacred monasteries
+            </p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-prayer-blue/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">12</div>
+                        <div class="text-sm text-gray-600">Tours Completed</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-monastery-gold/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">8</div>
+                        <div class="text-sm text-gray-600">Bookmarked</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-prayer-green/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">3</div>
+                        <div class="text-sm text-gray-600">Events Planned</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-prayer-red/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">25</div>
+                        <div class="text-sm text-gray-600">Archives Accessed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <div class="w-10 h-10 bg-prayer-blue rounded-full flex items-center justify-center mr-4">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Completed Rumtek Monastery Tour</div>
+                                <div class="text-sm text-gray-600">2 hours ago</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <div class="w-10 h-10 bg-monastery-gold rounded-full flex items-center justify-center mr-4">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Bookmarked Enchey Monastery</div>
+                                <div class="text-sm text-gray-600">1 day ago</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <div class="w-10 h-10 bg-prayer-green rounded-full flex items-center justify-center mr-4">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Downloaded Ancient Manuscript</div>
+                                <div class="text-sm text-gray-600">3 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Continue Learning/Exploring -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Continue Your Journey</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="continue-journey">
+                        <!-- Dynamic content based on user role -->
+                    </div>
+                </div>
+
+                <!-- Contact Monasteries -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Contact Monasteries</h2>
+                    <div class="mb-4">
+                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                            <option>Select a monastery...</option>
+                            <option>Rumtek Monastery</option>
+                            <option>Enchey Monastery</option>
+                            <option>Pemayangtse Monastery</option>
+                            <option>Tashiding Monastery</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <textarea placeholder="Write your message..." 
+                                  class="w-full p-3 border border-gray-300 rounded-lg h-24 resize-none focus:outline-none focus:ring-2 focus:ring-prayer-blue"></textarea>
+                    </div>
+                    <button class="bg-prayer-blue text-white px-6 py-2 rounded-lg hover:bg-prayer-blue/90 transition-colors">
+                        Send Message
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-8">
+                <!-- Personalized Recommendations -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Recommendations</h2>
+                    <div class="space-y-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <img src="https://images.pexels.com/photos/10343245/pexels-photo-10343245.jpeg" 
+                                 alt="Monastery" class="w-full h-32 object-cover rounded-md mb-3">
+                            <h3 class="font-medium text-gray-900 mb-1">Pemayangtse Monastery</h3>
+                            <p class="text-sm text-gray-600 mb-2">Ancient monastery with stunning mountain views</p>
+                            <div class="flex items-center text-sm text-prayer-blue">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                                </svg>
+                                15km away
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <img src="https://images.pexels.com/photos/6209505/pexels-photo-6209505.jpeg" 
+                                 alt="Festival" class="w-full h-32 object-cover rounded-md mb-3">
+                            <h3 class="font-medium text-gray-900 mb-1">Losar Festival</h3>
+                            <p class="text-sm text-gray-600 mb-2">Tibetan New Year celebration</p>
+                            <div class="flex items-center text-sm text-monastery-gold">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                                </svg>
+                                March 15, 2024
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Upcoming Events</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 border border-gray-200 rounded-lg">
+                            <div class="w-12 h-12 bg-prayer-red/10 rounded-lg flex items-center justify-center mr-4">
+                                <div class="text-center">
+                                    <div class="text-xs text-prayer-red font-semibold">MAR</div>
+                                    <div class="text-sm font-bold text-prayer-red">15</div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Losar Festival</div>
+                                <div class="text-sm text-gray-600">Rumtek Monastery</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-3 border border-gray-200 rounded-lg">
+                            <div class="w-12 h-12 bg-monastery-gold/10 rounded-lg flex items-center justify-center mr-4">
+                                <div class="text-center">
+                                    <div class="text-xs text-monastery-gold font-semibold">APR</div>
+                                    <div class="text-sm font-bold text-monastery-gold">22</div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Buddha Jayanti</div>
+                                <div class="text-sm text-gray-600">All Monasteries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-gradient-to-br from-prayer-blue to-monastery-gold rounded-xl p-6 text-white">
+                    <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+                    <div class="space-y-3">
+                        <button class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-lg transition-colors text-left">
+                            📱 Download Mobile App
+                        </button>
+                        <button class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-lg transition-colors text-left">
+                            🗺️ Plan Your Visit
+                        </button>
+                        <button class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-lg transition-colors text-left">
+                            📚 Browse Archives
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/app.js"></script>
+    <script>
+        // Initialize user dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            if (!user.firstName) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user info in UI
+            document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('user-initials').textContent = `${user.firstName[0]}${user.lastName[0]}`;
+            document.getElementById('welcome-name').textContent = user.firstName;
+            document.getElementById('dropdown-name').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('dropdown-role').textContent = user.role || 'User';
+
+            // Update welcome description based on role
+            const descriptions = {
+                tourist: "Continue your spiritual journey through Sikkim's sacred monasteries",
+                researcher: "Access digital archives and continue your scholarly research",
+                student: "Continue learning about Buddhist culture and spiritual practices",
+                monk: "Manage your monastery's digital presence",
+                archivist: "Preserve and digitize sacred heritage",
+                tourism_official: "Oversee tourism activities and monastery visits",
+                super_admin: "Manage the entire Monastery360 platform"
+            };
+            
+            const welcomeDescription = document.getElementById('welcome-description');
+            welcomeDescription.textContent = descriptions[user.role] || descriptions.tourist;
+
+            // Load role-specific continue journey content
+            loadContinueJourney(user.role);
+
+            // Setup user menu toggle
+            const userMenuTrigger = document.getElementById('user-menu-trigger');
+            const userMenu = document.getElementById('user-menu');
+            
+            userMenuTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function() {
+                userMenu.classList.add('hidden');
+            });
+        });
+
+        function loadContinueJourney(role) {
+            const container = document.getElementById('continue-journey');
+            let content = '';
+
+            switch(role) {
+                case 'tourist':
+                    content = `
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-prayer-blue/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 mb-2">Next Virtual Tour</h3>
+                            <p class="text-sm text-gray-600 mb-3">Explore Enchey Monastery's ancient halls</p>
+                            <button class="bg-prayer-blue text-white px-4 py-2 rounded-lg text-sm hover:bg-prayer-blue/90 transition-colors">
+                                Start Tour
+                            </button>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-prayer-green/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 mb-2">Plan Visit</h3>
+                            <p class="text-sm text-gray-600 mb-3">Create your monastery pilgrimage route</p>
+                            <button class="bg-prayer-green text-white px-4 py-2 rounded-lg text-sm hover:bg-prayer-green/90 transition-colors">
+                                Plan Now
+                            </button>
+                        </div>
+                    `;
+                    break;
+                case 'researcher':
+                    content = `
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-monastery-gold/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 mb-2">New Manuscripts</h3>
+                            <p class="text-sm text-gray-600 mb-3">Recently digitized 15th century texts</p>
+                            <button class="bg-monastery-gold text-white px-4 py-2 rounded-lg text-sm hover:bg-monastery-gold/90 transition-colors">
+                                Access Archives
+                            </button>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-prayer-red/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 mb-2">High-Res Images</h3>
+                            <p class="text-sm text-gray-600 mb-3">Sacred murals and artifacts</p>
+                            <button class="bg-prayer-red text-white px-4 py-2 rounded-lg text-sm hover:bg-prayer-red/90 transition-colors">
+                                Browse Gallery
+                            </button>
+                        </div>
+                    `;
+                    break;
+                case 'student':
+                    content = `
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-prayer-yellow/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-prayer-yellow" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 mb-2">Next Lesson</h3>
+                            <p class="text-sm text-gray-600 mb-3">Buddhist Philosophy: The Four Noble Truths</p>
+                            <button class="bg-prayer-yellow text-white px-4 py-2 rounded-lg text-sm hover:bg-prayer-yellow/90 transition-colors">
+                                Continue Learning
+                            </button>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-prayer-blue/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 mb-2">Study Group</h3>
+                            <p class="text-sm text-gray-600 mb-3">Join weekly meditation discussions</p>
+                            <button class="bg-prayer-blue text-white px-4 py-2 rounded-lg text-sm hover:bg-prayer-blue/90 transition-colors">
+                                Join Group
+                            </button>
+                        </div>
+                    `;
+                    break;
+                default:
+                    content = `
+                        <div class="col-span-2 text-center py-8 text-gray-600">
+                            <p>Welcome to your dashboard. Explore the features based on your role.</p>
+                        </div>
+                    `;
+            }
+
+            container.innerHTML = content;
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

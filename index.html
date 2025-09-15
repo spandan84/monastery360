@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monastery360 - Discover Sikkim's Sacred Monasteries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prayer: {
+                            blue: '#4F46E5',
+                            white: '#FFFFFF',
+                            red: '#DC2626',
+                            green: '#059669',
+                            yellow: '#D97706'
+                        },
+                        monastery: {
+                            gold: '#F59E0B',
+                            copper: '#B45309',
+                            crimson: '#991B1B',
+                            earth: '#92400E'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="font-inter">
+    <!--
+    PROMPTS BLOCK:
+    "Allow users to register/login with email, Google, or social accounts."
+    "Provide role-based onboarding: Tourist, Researcher, or Student."
+    "Give tourists access to 360° tours, maps, booking options, and event calendars."
+    "Allow researchers to request access to archives, manuscripts, and high-resolution data."
+    "Enable users to save/bookmark monasteries and create a personal travel/learning plan."
+    "Add feedback, ratings, and comment features for monasteries."
+    "Show personalized recommendations (nearby monasteries, upcoming festivals, related manuscripts)."
+    "Enable offline mode for users traveling in remote areas."
+    "Track user activity (last visited monastery, favorites) for a personalized dashboard."
+    -->
+    
+    <!-- Floating Navbar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md border-b border-gray-200 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-prayer-blue">Monastery360</div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-prayer-blue transition-colors">Home</a>
+                    <a href="#tours" class="text-gray-700 hover:text-prayer-blue transition-colors">Virtual Tours</a>
+                    <a href="#map" class="text-gray-700 hover:text-prayer-blue transition-colors">Map</a>
+                    <a href="#archives" class="text-gray-700 hover:text-prayer-blue transition-colors">Archives</a>
+                    <a href="#calendar" class="text-gray-700 hover:text-prayer-blue transition-colors">Calendar</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-prayer-blue transition-colors">Contact</a>
+                    <a href="login.html" class="bg-prayer-blue text-white px-4 py-2 rounded-lg hover:bg-prayer-blue/90 transition-colors">Login</a>
+                    <a href="register.html" class="border border-prayer-blue text-prayer-blue px-4 py-2 rounded-lg hover:bg-prayer-blue hover:text-white transition-colors">Register</a>
+                </div>
+
+                <button class="md:hidden" id="mobile-menu-toggle">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="#home" class="block px-3 py-2 text-gray-700">Home</a>
+                <a href="#tours" class="block px-3 py-2 text-gray-700">Virtual Tours</a>
+                <a href="#map" class="block px-3 py-2 text-gray-700">Map</a>
+                <a href="#archives" class="block px-3 py-2 text-gray-700">Archives</a>
+                <a href="#calendar" class="block px-3 py-2 text-gray-700">Calendar</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-700">Contact</a>
+                <div class="flex space-x-2 px-3 py-2">
+                    <a href="login.html" class="bg-prayer-blue text-white px-4 py-2 rounded-lg text-sm">Login</a>
+                    <a href="register.html" class="border border-prayer-blue text-prayer-blue px-4 py-2 rounded-lg text-sm">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-monastery-crimson/80 to-prayer-blue/80"></div>
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://t3.ftcdn.net/jpg/14/93/25/28/240_F_1493252861_MeWHJZwwDx716CYJdxugznJafDXpPUbO.jpg')"></div>
+        <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+                Discover Sikkim's
+                <span class="text-monastery-gold">Sacred Heritage</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 animate-fade-in-delay">
+                Immerse yourself in 360° virtual monastery tours, ancient archives, and spiritual journeys
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+                <button onclick="scrollToTours()" class="bg-monastery-gold hover:bg-monastery-gold/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    Start Virtual Tour
+                </button>
+                <button onclick="scrollToMap()" class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-prayer-blue transition-all duration-300">
+                    Explore Map
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Overview -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Sacred Digital Experience</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Preserving and sharing Sikkim's monastic heritage through cutting-edge technology and respectful storytelling
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="feature-card bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-prayer-blue/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-prayer-blue/20 transition-colors">
+                        <svg class="w-8 h-8 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">360° Virtual Tours</h3>
+                    <p class="text-gray-600">Immersive monastery experiences from anywhere in the world</p>
+                </div>
+
+                <div class="feature-card bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-prayer-green/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-prayer-green/20 transition-colors">
+                        <svg class="w-8 h-8 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Interactive Maps</h3>
+                    <p class="text-gray-600">Navigate monastery locations with detailed route planning</p>
+                </div>
+
+                <div class="feature-card bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-monastery-gold/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-monastery-gold/20 transition-colors">
+                        <svg class="w-8 h-8 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Digital Archives</h3>
+                    <p class="text-gray-600">Access manuscripts, murals, and historical documents</p>
+                </div>
+
+                <div class="feature-card bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-prayer-red/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-prayer-red/20 transition-colors">
+                        <svg class="w-8 h-8 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Cultural Calendar</h3>
+                    <p class="text-gray-600">Track festivals, rituals, and spiritual events</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tours Section -->
+    <section id="tours" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Virtual Monastery Tours</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Experience the sacred atmosphere of Sikkim's monasteries through immersive 360° virtual reality
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="tours-grid">
+                <!-- Tour cards will be dynamically generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section id="map" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Monastery Map & Routes</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Plan your pilgrimage with detailed maps, routes, and transportation information
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="relative h-96 bg-gradient-to-br from-prayer-green/20 to-prayer-blue/20 rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-80" 
+                         style="background-image: url('https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg')">
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button onclick="openMapModal()" class="bg-white/90 hover:bg-white text-prayer-blue px-8 py-4 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+                            Open Interactive Map
+                        </button>
+                    </div>
+                    <!-- Map pins -->
+                    <div class="absolute top-1/4 left-1/3 w-4 h-4 bg-prayer-red rounded-full border-2 border-white shadow-lg pin-pulse"></div>
+                    <div class="absolute top-1/2 left-1/2 w-4 h-4 bg-prayer-blue rounded-full border-2 border-white shadow-lg pin-pulse"></div>
+                    <div class="absolute top-2/3 right-1/3 w-4 h-4 bg-monastery-gold rounded-full border-2 border-white shadow-lg pin-pulse"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-prayer-blue mb-2">25+</div>
+                        <div class="text-gray-600">Sacred Monasteries</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-prayer-green mb-2">150km</div>
+                        <div class="text-gray-600">Pilgrimage Routes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-monastery-gold mb-2">12</div>
+                        <div class="text-gray-600">Transport Hubs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Archives & Audio Guide -->
+    <section id="archives" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Digital Archives -->
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Digital Archives</h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Explore centuries-old manuscripts, sacred murals, and historical artifacts preserved for future generations
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="archive-item bg-gray-50 p-6 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-16 h-16 bg-monastery-gold/20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-8 h-8 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">Ancient Manuscripts</h3>
+                                    <p class="text-gray-600">15th century Buddhist texts</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="archive-item bg-gray-50 p-6 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-16 h-16 bg-prayer-red/20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-8 h-8 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">Sacred Murals</h3>
+                                    <p class="text-gray-600">High-resolution monastery artwork</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="archive-item bg-gray-50 p-6 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-16 h-16 bg-prayer-blue/20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-8 h-8 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">Historical Artifacts</h3>
+                                    <p class="text-gray-600">Sacred objects and relics</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio Guide -->
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Audio Guide</h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Listen to guided narrations, chanting, and spiritual teachings from monastery elders
+                    </p>
+
+                    <div class="bg-gradient-to-br from-monastery-gold/10 to-prayer-blue/10 p-8 rounded-2xl">
+                        <div class="text-center mb-6">
+                            <div class="w-32 h-32 bg-white rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+                                <svg class="w-16 h-16 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Morning Prayer Chant</h3>
+                            <p class="text-gray-600">Rumtek Monastery</p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-12 h-12 bg-prayer-blue rounded-full flex items-center justify-center text-white">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </button>
+                                <div class="flex-1">
+                                    <div class="bg-gray-200 h-2 rounded-full">
+                                        <div class="bg-prayer-blue h-2 rounded-full w-1/3"></div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-600">2:34 / 7:12</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center">
+                            <button class="text-prayer-blue hover:text-prayer-blue/80 font-semibold">
+                                View All Audio Guides →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Calendar -->
+    <section id="calendar" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Cultural Calendar</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Stay connected with sacred festivals, ceremonies, and spiritual events throughout the year
+                </p>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-event">
+                    <div class="timeline-date">Mar 15</div>
+                    <div class="timeline-content">
+                        <h3 class="font-semibold text-lg mb-2">Losar Festival</h3>
+                        <p class="text-gray-600 mb-2">Tibetan New Year celebration at Rumtek Monastery</p>
+                        <span class="inline-block bg-prayer-red text-white px-3 py-1 rounded-full text-sm">Festival</span>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-date">Apr 22</div>
+                    <div class="timeline-content">
+                        <h3 class="font-semibold text-lg mb-2">Buddha Jayanti</h3>
+                        <p class="text-gray-600 mb-2">Birth anniversary of Buddha across all monasteries</p>
+                        <span class="inline-block bg-monastery-gold text-white px-3 py-1 rounded-full text-sm">Sacred Day</span>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-date">Jun 08</div>
+                    <div class="timeline-content">
+                        <h3 class="font-semibold text-lg mb-2">Hemis Festival</h3>
+                        <p class="text-gray-600 mb-2">Masked dance ceremony honoring Guru Padmasambhava</p>
+                        <span class="inline-block bg-prayer-blue text-white px-3 py-1 rounded-full text-sm">Ceremony</span>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-date">Sep 12</div>
+                    <div class="timeline-content">
+                        <h3 class="font-semibold text-lg mb-2">Drupka Teshi</h3>
+                        <p class="text-gray-600 mb-2">First sermon of Buddha commemoration</p>
+                        <span class="inline-block bg-prayer-green text-white px-3 py-1 rounded-full text-sm">Teaching</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download App Section -->
+    <section class="py-20 bg-gradient-to-r from-prayer-blue to-monastery-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <h2 class="text-4xl font-bold mb-6">Experience Offline</h2>
+                    <p class="text-xl mb-8 opacity-90">
+                        Download the Monastery360 mobile app for offline access during your spiritual journey through remote areas of Sikkim
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            Offline 360° virtual tours
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            GPS navigation to monasteries
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            Audio guides and chanting
+                        </li>
+                    </ul>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button class="bg-white text-prayer-blue px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                            </svg>
+                            App Store
+                        </button>
+                        <button class="bg-white text-prayer-blue px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                            </svg>
+                            Google Play
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg" 
+                             alt="Monastery360 Mobile App" 
+                             class="w-80 h-auto mx-auto rounded-3xl shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 rounded-3xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold text-monastery-gold mb-4">Monastery360</div>
+                    <p class="text-gray-400 mb-4">
+                        Preserving and sharing Sikkim's sacred heritage through immersive digital experiences
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-monastery-gold transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-monastery-gold transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-monastery-gold transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.219-5.175 1.219-5.175s-.311-.623-.311-1.543c0-1.447.84-2.527 1.887-2.527.889 0 1.318.667 1.318 1.466 0 .893-.568 2.229-.861 3.467-.245 1.04.522 1.887 1.548 1.887 1.857 0 3.285-1.96 3.285-4.792 0-2.503-1.799-4.253-4.370-4.253-2.978 0-4.725 2.234-4.725 4.546 0 .901.347 1.864.78 2.388.086.104.098.195.072.301-.079.327-.255 1.047-.290 1.193-.047.191-.154.232-.356.140-1.297-.604-2.107-2.502-2.107-4.026 0-3.297 2.394-6.325 6.901-6.325 3.628 0 6.44 2.584 6.44 6.039 0 3.615-2.274 6.525-5.437 6.525-1.061 0-2.059-.552-2.400-1.209 0 0-.525 2.002-.653 2.495-.237.911-.878 2.058-1.307 2.755.984.304 2.028.470 3.107.470 6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#tours" class="text-gray-400 hover:text-white transition-colors">Virtual Tours</a></li>
+                        <li><a href="#map" class="text-gray-400 hover:text-white transition-colors">Interactive Map</a></li>
+                        <li><a href="#archives" class="text-gray-400 hover:text-white transition-colors">Digital Archives</a></li>
+                        <li><a href="#calendar" class="text-gray-400 hover:text-white transition-colors">Cultural Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Account</h3>
+                    <ul class="space-y-2">
+                        <li><a href="login.html" class="text-gray-400 hover:text-white transition-colors">Login</a></li>
+                        <li><a href="register.html" class="text-gray-400 hover:text-white transition-colors">Register</a></li>
+                        <li><a href="user-dashboard.html" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Gangtok, Sikkim 737101</li>
+                        <li>+91 3592 123456</li>
+                        <li>info@monastery360.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Monastery360. All rights reserved. | Preserving sacred heritage through technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 360° Tour Modal -->
+    <div id="tour-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+        <div class="absolute top-4 right-4">
+            <button onclick="closeTourModal()" class="text-white text-4xl hover:text-gray-300">&times;</button>
+        </div>
+        <div class="h-full flex items-center justify-center p-4">
+            <div class="text-center text-white">
+                <h3 id="modal-title" class="text-2xl mb-4"></h3>
+                <div class="w-full max-w-4xl h-96 bg-gradient-to-br from-prayer-blue/30 to-monastery-gold/30 rounded-lg mb-4 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center" id="modal-image"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-white text-center">
+                            <div class="w-20 h-20 border-4 border-white rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                                </svg>
+                            </div>
+                            <p class="text-lg">360° Virtual Tour</p>
+                        </div>
+                    </div>
+                </div>
+                <p id="modal-description" class="text-gray-300 max-w-2xl"></p>
+                <div id="tour-details" class="mt-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div id="map-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+        <div class="absolute top-4 right-4">
+            <button onclick="closeMapModal()" class="text-white text-4xl hover:text-gray-300">&times;</button>
+        </div>
+        <div class="h-full flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg w-full max-w-6xl h-5/6 p-6">
+                <h3 class="text-2xl font-bold mb-4">Interactive Monastery Map</h3>
+                <div class="grid grid-cols-12 gap-4 h-[calc(100%-3rem)]">
+                    <div class="col-span-12 lg:col-span-4">
+                        <div class="h-full overflow-y-auto border rounded-lg p-3" id="map-list"></div>
+                    </div>
+                    <div class="col-span-12 lg:col-span-8">
+                        <div class="h-full rounded-lg overflow-hidden border" id="map-embed">
+                            <div class="w-full h-full flex items-center justify-center text-gray-500">Loading map...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Archive Modal -->
+    <div id="archive-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden">
+        <div class="absolute top-4 right-4">
+            <button onclick="closeArchiveModal()" class="text-white text-4xl hover:text-gray-300">&times;</button>
+        </div>
+        <div class="h-full flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg w-full max-w-3xl p-6">
+                <h3 id="archive-modal-title" class="text-2xl font-bold mb-4">Archive</h3>
+                <div id="archive-modal-body" class="text-gray-700"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional: Firebase for real-time calendar events -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="assets/firebase-config.js"></script>
+
+    <!-- External content config (replace URLs inside with your originals) -->
+    <script src="assets/content.js"></script>
+
+    <script src="assets/app.js"></script>
+</body>
+</html>

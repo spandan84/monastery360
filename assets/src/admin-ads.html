@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertisement Management - Monastery360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prayer: {
+                            blue: '#4F46E5',
+                            white: '#FFFFFF',
+                            red: '#DC2626',
+                            green: '#059669',
+                            yellow: '#D97706'
+                        },
+                        monastery: {
+                            gold: '#F59E0B',
+                            copper: '#B45309',
+                            crimson: '#991B1B',
+                            earth: '#92400E'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="font-inter bg-gray-50">
+    <!--
+    PROMPTS BLOCK:
+    "Enable admins to upload/edit monastery details, images, and 360° panoramas."
+    "Allow monks to update rituals, daily prayers, and cultural calendar entries."
+    "Add announcement/alert feature (road closures, special events, weather updates)."
+    -->
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-prayer-blue">Monastery360</a>
+                    <span class="ml-4 px-3 py-1 bg-monastery-gold text-white text-sm rounded-full">Ads Manager</span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="admin-dashboard.html" class="text-gray-600 hover:text-prayer-blue">
+                        ← Back to Dashboard
+                    </a>
+                    <div class="w-8 h-8 bg-monastery-gold rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                        AD
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Advertisement Management</h1>
+            <p class="text-gray-600">Create and manage monastery advertisements, announcements, and event promotions</p>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex space-x-4">
+                <button onclick="showCreateAd()" 
+                        class="bg-prayer-blue text-white px-6 py-3 rounded-lg hover:bg-prayer-blue/90 transition-colors flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    Create Advertisement
+                </button>
+                
+                <button onclick="showCreateAnnouncement()" 
+                        class="bg-monastery-gold text-white px-6 py-3 rounded-lg hover:bg-monastery-gold/90 transition-colors flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    Create Announcement
+                </button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                    <option>All Monasteries</option>
+                    <option>Rumtek Monastery</option>
+                    <option>Enchey Monastery</option>
+                    <option>Pemayangtse Monastery</option>
+                </select>
+                
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                    <option>All Types</option>
+                    <option>Festival</option>
+                    <option>Workshop</option>
+                    <option>Retreat</option>
+                    <option>Announcement</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b border-gray-200 mb-8">
+            <nav class="-mb-px flex space-x-8">
+                <button onclick="showTab('active')" 
+                        class="tab-button active border-b-2 border-prayer-blue text-prayer-blue py-2 px-1 font-medium">
+                    Active Ads
+                </button>
+                <button onclick="showTab('draft')" 
+                        class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 font-medium">
+                    Drafts
+                </button>
+                <button onclick="showTab('scheduled')" 
+                        class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 font-medium">
+                    Scheduled
+                </button>
+                <button onclick="showTab('expired')" 
+                        class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 font-medium">
+                    Expired
+                </button>
+            </nav>
+        </div>
+
+        <!-- Active Ads Tab -->
+        <div id="active-tab" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Festival Advertisement -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="relative h-48">
+                        <img src="https://images.pexels.com/photos/6209505/pexels-photo-6209505.jpeg" 
+                             alt="Losar Festival" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-prayer-green text-white px-2 py-1 text-xs rounded-full">Active</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">Losar Festival 2024</h3>
+                            <span class="text-xs text-gray-500">Festival</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Celebrate Tibetan New Year with traditional ceremonies, masked dances, and spiritual blessings at Rumtek Monastery.</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                            </svg>
+                            Rumtek Monastery
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <span class="text-gray-500">Ends:</span>
+                                <span class="font-medium text-gray-900">Mar 15, 2024</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="p-2 text-prayer-blue hover:bg-prayer-blue/10 rounded-lg">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                    </svg>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workshop Advertisement -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="relative h-48">
+                        <img src="https://images.pexels.com/photos/8471906/pexels-photo-8471906.jpeg" 
+                             alt="Meditation Workshop" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-prayer-green text-white px-2 py-1 text-xs rounded-full">Active</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">Meditation Workshop</h3>
+                            <span class="text-xs text-gray-500">Workshop</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Learn traditional Buddhist meditation techniques with experienced monks in a peaceful monastery setting.</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                            </svg>
+                            Enchey Monastery
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <span class="text-gray-500">Ends:</span>
+                                <span class="font-medium text-gray-900">Apr 30, 2024</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="p-2 text-prayer-blue hover:bg-prayer-blue/10 rounded-lg">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                    </svg>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Announcement -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="relative h-48 bg-gradient-to-br from-monastery-gold/20 to-prayer-blue/20 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-prayer-yellow text-white px-2 py-1 text-xs rounded-full">Announcement</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">Road Closure Alert</h3>
+                            <span class="text-xs text-gray-500">Announcement</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Temporary road closure to Tashiding Monastery due to landslide. Alternative routes available via Yuksom.</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                            </svg>
+                            Tashiding Monastery
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <span class="text-gray-500">Valid until:</span>
+                                <span class="font-medium text-gray-900">Apr 10, 2024</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="p-2 text-prayer-blue hover:bg-prayer-blue/10 rounded-lg">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                    </svg>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other tabs (hidden by default) -->
+        <div id="draft-tab" class="tab-content hidden">
+            <div class="text-center py-12">
+                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No draft advertisements</h3>
+                <p class="text-gray-600">Create a new advertisement to get started.</p>
+            </div>
+        </div>
+
+        <div id="scheduled-tab" class="tab-content hidden">
+            <div class="text-center py-12">
+                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No scheduled advertisements</h3>
+                <p class="text-gray-600">Schedule advertisements to be published later.</p>
+            </div>
+        </div>
+
+        <div id="expired-tab" class="tab-content hidden">
+            <div class="text-center py-12">
+                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM12 13.5l3.5 2.5L12 18.5 8.5 16l3.5-2.5z"/>
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No expired advertisements</h3>
+                <p class="text-gray-600">Expired advertisements will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Advertisement Modal -->
+    <div id="create-ad-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold text-gray-900">Create Advertisement</h2>
+                        <button onclick="hideCreateAd()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <form class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Advertisement Type</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                                <option>Festival</option>
+                                <option>Workshop</option>
+                                <option>Retreat</option>
+                                <option>Ceremony</option>
+                                <option>Special Event</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Monastery</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                                <option>Rumtek Monastery</option>
+                                <option>Enchey Monastery</option>
+                                <option>Pemayangtse Monastery</option>
+                                <option>Tashiding Monastery</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue" 
+                               placeholder="Enter advertisement title">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue" 
+                                  placeholder="Enter detailed description of the event or announcement"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                            <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                            <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                            <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                            </svg>
+                            <p class="text-gray-600 mb-2">Click to upload or drag and drop</p>
+                            <p class="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                            <input type="file" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" onclick="hideCreateAd()" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="button" class="px-6 py-2 border border-prayer-blue text-prayer-blue rounded-lg hover:bg-prayer-blue/10 transition-colors">
+                            Save as Draft
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-prayer-blue text-white rounded-lg hover:bg-prayer-blue/90 transition-colors">
+                            Publish
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/admin.js"></script>
+    <script>
+        // Tab functionality for advertisement management
+        function showTab(tab) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'border-prayer-blue', 'text-prayer-blue');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab
+            document.getElementById(tab + '-tab').classList.remove('hidden');
+            
+            // Activate selected button
+            const activeButton = event.target;
+            activeButton.classList.add('active', 'border-prayer-blue', 'text-prayer-blue');
+            activeButton.classList.remove('border-transparent', 'text-gray-500');
+        }
+
+        function showCreateAd() {
+            document.getElementById('create-ad-modal').classList.remove('hidden');
+        }
+
+        function hideCreateAd() {
+            document.getElementById('create-ad-modal').classList.add('hidden');
+        }
+
+        function showCreateAnnouncement() {
+            // Similar to showCreateAd but with announcement-specific form
+            showCreateAd(); // For now, reuse the same modal
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('create-ad-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCreateAd();
+            }
+        });
+    </script>
+</body>
+</html>

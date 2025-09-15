@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Monastery360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prayer: {
+                            blue: '#4F46E5',
+                            white: '#FFFFFF',
+                            red: '#DC2626',
+                            green: '#059669',
+                            yellow: '#D97706'
+                        },
+                        monastery: {
+                            gold: '#F59E0B',
+                            copper: '#B45309',
+                            crimson: '#991B1B',
+                            earth: '#92400E'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="font-inter bg-gray-50">
+    <!--
+    PROMPTS BLOCK:
+    "Allow users to register/login with email, Google, or social accounts."
+    "Enable users to save/bookmark monasteries and create a personal travel/learning plan."
+    "Add feedback, ratings, and comment features for monasteries."
+    -->
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center">
+                    <span class="text-2xl font-bold text-prayer-blue">Monastery360</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-prayer-blue transition-colors">Home</a>
+                    <a href="index.html#tours" class="text-gray-700 hover:text-prayer-blue transition-colors">Virtual Tours</a>
+                    <a href="index.html#map" class="text-gray-700 hover:text-prayer-blue transition-colors">Map</a>
+                    <a href="index.html#archives" class="text-gray-700 hover:text-prayer-blue transition-colors">Archives</a>
+                    <a href="#" class="text-prayer-blue font-medium">Contact</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-prayer-blue hover:text-prayer-blue/80">Login</a>
+                    <a href="register.html" class="bg-prayer-blue text-white px-4 py-2 rounded-lg hover:bg-prayer-blue/90 transition-colors">Register</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Have questions about monasteries, planning a visit, or need research assistance? We're here to help you on your spiritual journey.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Contact Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">Send us a Message</h2>
+                    
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">
+                                    First Name *
+                                </label>
+                                <input type="text" id="firstName" name="firstName" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Last Name *
+                                </label>
+                                <input type="text" id="lastName" name="lastName" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address *
+                            </label>
+                            <input type="email" id="email" name="email" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="userType" class="block text-sm font-medium text-gray-700 mb-2">
+                                    I am a *
+                                </label>
+                                <select id="userType" name="userType" required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent">
+                                    <option value="">Select your role...</option>
+                                    <option value="tourist">Tourist</option>
+                                    <option value="researcher">Researcher</option>
+                                    <option value="student">Student</option>
+                                    <option value="pilgrim">Pilgrim</option>
+                                    <option value="media">Media/Press</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="monastery" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Monastery of Interest
+                                </label>
+                                <select id="monastery" name="monastery"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent">
+                                    <option value="">Select monastery...</option>
+                                    <option value="rumtek">Rumtek Monastery</option>
+                                    <option value="enchey">Enchey Monastery</option>
+                                    <option value="pemayangtse">Pemayangtse Monastery</option>
+                                    <option value="tashiding">Tashiding Monastery</option>
+                                    <option value="dubdi">Dubdi Monastery</option>
+                                    <option value="general">General Inquiry</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">
+                                Subject *
+                            </label>
+                            <input type="text" id="subject" name="subject" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent"
+                                   placeholder="Brief description of your inquiry">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
+                                Message *
+                            </label>
+                            <textarea id="message" name="message" rows="6" required
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue focus:border-transparent resize-none"
+                                      placeholder="Please provide details about your inquiry, visit plans, research needs, or any questions you may have..."></textarea>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input type="checkbox" id="newsletter" name="newsletter" 
+                                   class="rounded border-gray-300 text-prayer-blue focus:ring-prayer-blue">
+                            <label for="newsletter" class="ml-2 text-sm text-gray-600">
+                                I would like to receive updates about monastery events and cultural festivals
+                            </label>
+                        </div>
+
+                        <button type="submit" 
+                                class="w-full bg-prayer-blue text-white py-3 px-6 rounded-lg font-semibold hover:bg-prayer-blue/90 transition-colors flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Information & FAQ -->
+            <div class="space-y-8">
+                <!-- Contact Information -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Contact Information</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-prayer-blue/10 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900">Address</h3>
+                                <p class="text-gray-600 text-sm">
+                                    Monastery360 Platform<br>
+                                    Gangtok, Sikkim 737101<br>
+                                    India
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-monastery-gold/10 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900">Phone</h3>
+                                <p class="text-gray-600 text-sm">
+                                    +91 3592 123456<br>
+                                    Mon-Fri: 9:00 AM - 6:00 PM IST
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-prayer-green/10 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900">Email</h3>
+                                <p class="text-gray-600 text-sm">
+                                    info@monastery360.com<br>
+                                    We typically respond within 24 hours
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick FAQ -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Frequently Asked Questions</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-medium text-gray-900 mb-2">How do I visit a monastery?</h3>
+                            <p class="text-gray-600 text-sm">
+                                Most monasteries welcome visitors. Check our individual monastery pages for visiting hours, dress codes, and any special requirements.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-medium text-gray-900 mb-2">Can I access digital archives?</h3>
+                            <p class="text-gray-600 text-sm">
+                                Register as a researcher to request access to manuscripts and historical documents. Some materials may require special permissions.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-medium text-gray-900 mb-2">Are virtual tours free?</h3>
+                            <p class="text-gray-600 text-sm">
+                                Yes! All 360° virtual tours are completely free. Create an account to save favorites and track your progress.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-medium text-gray-900 mb-2">How can I contribute?</h3>
+                            <p class="text-gray-600 text-sm">
+                                We welcome photos, stories, and historical information. Contact us to learn about volunteer opportunities and content submission.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="bg-gradient-to-br from-prayer-red/10 to-monastery-gold/10 rounded-2xl p-6 border border-prayer-red/20">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-6 h-6 text-prayer-red mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                        <h3 class="font-semibold text-gray-900">Emergency Contact</h3>
+                    </div>
+                    <p class="text-gray-700 text-sm mb-3">
+                        For urgent matters related to monastery access, road conditions, or emergency situations:
+                    </p>
+                    <p class="font-semibold text-prayer-red">
+                        📞 +91 3592 EMERGENCY<br>
+                        Available 24/7
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center">
+                <div class="w-16 h-16 bg-prayer-green/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Message Sent Successfully!</h3>
+                <p class="text-gray-600 mb-6">
+                    Thank you for reaching out. We'll respond to your inquiry within 24 hours.
+                </p>
+                <button onclick="closeSuccessModal()" 
+                        class="bg-prayer-blue text-white px-6 py-3 rounded-lg hover:bg-prayer-blue/90 transition-colors">
+                    Continue Exploring
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/app.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const contactData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                userType: formData.get('userType'),
+                monastery: formData.get('monastery'),
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+                newsletter: formData.get('newsletter') ? true : false,
+                timestamp: new Date().toISOString()
+            };
+
+            // Store message in localStorage (simulate sending)
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            messages.push(contactData);
+            localStorage.setItem('contactMessages', JSON.stringify(messages));
+
+            // Show success modal
+            document.getElementById('success-modal').classList.remove('hidden');
+
+            // Reset form
+            this.reset();
+        });
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('success-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Monastery360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prayer: {
+                            blue: '#4F46E5',
+                            white: '#FFFFFF',
+                            red: '#DC2626',
+                            green: '#059669',
+                            yellow: '#D97706'
+                        },
+                        monastery: {
+                            gold: '#F59E0B',
+                            copper: '#B45309',
+                            crimson: '#991B1B',
+                            earth: '#92400E'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="font-inter bg-gray-50">
+    <!--
+    PROMPTS BLOCK:
+    "Provide an admin dashboard with role-based access (Monks, Archivists, Tourism Officials)."
+    "Enable admins to upload/edit monastery details, images, and 360° panoramas."
+    "Allow monks to update rituals, daily prayers, and cultural calendar entries."
+    "Allow archivists to digitize and upload manuscripts, murals, and historical texts."
+    "Provide tourism officials with tools to manage bookings, routes, and transport links."
+    "Enable super-admin to manage user roles, permissions, and platform settings."
+    "Offer analytics: most-visited monasteries, user activity trends, archive access stats."
+    "Include moderation tools for approving or rejecting user-submitted content."
+    "Add announcement/alert feature (road closures, special events, weather updates)."
+    "Enable backup and recovery of monastery digital archives."
+    -->
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-prayer-blue">Monastery360</a>
+                    <span class="ml-4 px-3 py-1 bg-monastery-gold text-white text-sm rounded-full">Admin</span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 relative">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                        </svg>
+                        <span class="absolute -top-1 -right-1 bg-prayer-red text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </button>
+                    
+                    <div class="relative">
+                        <button class="flex items-center text-gray-700 hover:text-prayer-blue" id="admin-menu-trigger">
+                            <div class="w-8 h-8 bg-monastery-gold rounded-full flex items-center justify-center text-white text-sm font-semibold mr-2">
+                                <span id="admin-initials">AD</span>
+                            </div>
+                            <span id="admin-name">Admin User</span>
+                            <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </button>
+
+                        <div id="admin-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden">
+                            <div class="p-3 border-b border-gray-100">
+                                <div class="font-medium" id="dropdown-admin-name">Admin User</div>
+                                <div class="text-sm text-gray-600" id="dropdown-admin-role">Super Admin</div>
+                            </div>
+                            <div class="py-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile Settings</a>
+                                <a href="user-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">User Dashboard</a>
+                                <a href="#" onclick="adminLogout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 min-h-screen">
+            <nav class="p-4">
+                <div class="space-y-2">
+                    <a href="#dashboard" onclick="showTab('dashboard')" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 tab-link active">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                    
+                    <a href="#monasteries" onclick="showTab('monasteries')" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 tab-link">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        Monasteries
+                    </a>
+                    
+                    <a href="#archives" onclick="showTab('archives')" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 tab-link">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                        </svg>
+                        Archives
+                    </a>
+                    
+                    <a href="#calendar" onclick="showTab('calendar')" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 tab-link">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                        Calendar
+                    </a>
+                    
+                    <a href="#users" onclick="showTab('users')" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 tab-link">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 7c0-2.21-1.79-4-4-4S8 4.79 8 7s1.79 4 4 4 4-1.79 4-4zM12 14c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/>
+                        </svg>
+                        Users
+                    </a>
+                    
+                    <a href="#analytics" onclick="showTab('analytics')" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 tab-link">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 12l2-2 4 4 6-6 6 6"/>
+                        </svg>
+                        Analytics
+                    </a>
+                    
+                    <a href="admin-ads.html" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.50-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92S19.61 16.08 18 16.08z"/>
+                        </svg>
+                        Advertisements
+                    </a>
+                    
+                    <a href="admin-contact.html" 
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        Messages
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+                    <p class="text-gray-600">Manage Monastery360 platform and content</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-prayer-blue/10 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-2xl font-bold text-gray-900">25</div>
+                                <div class="text-sm text-gray-600">Total Monasteries</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-monastery-gold/10 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M16 7c0-2.21-1.79-4-4-4S8 4.79 8 7s1.79 4 4 4 4-1.79 4-4zM12 14c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-2xl font-bold text-gray-900">1,245</div>
+                                <div class="text-sm text-gray-600">Active Users</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-prayer-green/10 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-2xl font-bold text-gray-900">500</div>
+                                <div class="text-sm text-gray-600">Digital Archives</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-prayer-red/10 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-2xl font-bold text-gray-900">12</div>
+                                <div class="text-sm text-gray-600">Upcoming Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Quick Actions -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="w-10 h-10 bg-prayer-blue rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-gray-900">New monastery added</div>
+                                    <div class="text-sm text-gray-600">Tashiding Monastery by Monk Tenzin</div>
+                                </div>
+                                <div class="text-sm text-gray-500">2h ago</div>
+                            </div>
+
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="w-10 h-10 bg-monastery-gold rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-gray-900">Archive uploaded</div>
+                                    <div class="text-sm text-gray-600">15th century manuscript by Archivist Pema</div>
+                                </div>
+                                <div class="text-sm text-gray-500">4h ago</div>
+                            </div>
+
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="w-10 h-10 bg-prayer-green rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M16 7c0-2.21-1.79-4-4-4S8 4.79 8 7s1.79 4 4 4 4-1.79 4-4zM12 14c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-gray-900">New user registered</div>
+                                    <div class="text-sm text-gray-600">Tourist from Delhi joined</div>
+                                </div>
+                                <div class="text-sm text-gray-500">6h ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+                        <div class="grid grid-cols-1 gap-3">
+                            <button onclick="showTab('monasteries')" 
+                                    class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5 mr-3 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                </svg>
+                                Add New Monastery
+                            </button>
+                            
+                            <button onclick="showTab('archives')" 
+                                    class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5 mr-3 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+                                </svg>
+                                Upload Archive
+                            </button>
+                            
+                            <button onclick="showTab('calendar')" 
+                                    class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5 mr-3 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                </svg>
+                                Create Event
+                            </button>
+                            
+                            <button class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5 mr-3 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/>
+                                </svg>
+                                Backup Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other tab contents will be loaded dynamically -->
+            <div id="monasteries-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Monastery Management</h2>
+                <!-- Monastery management content -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <p class="text-gray-600">Monastery management interface will be implemented here.</p>
+                </div>
+            </div>
+
+            <div id="archives-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Digital Archives</h2>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <p class="text-gray-600">Archive management interface will be implemented here.</p>
+                </div>
+            </div>
+
+            <div id="calendar-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Cultural Calendar</h2>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <p class="text-gray-600">Calendar management interface will be implemented here.</p>
+                </div>
+            </div>
+
+            <div id="users-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">User Management</h2>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <p class="text-gray-600">User management interface will be implemented here.</p>
+                </div>
+            </div>
+
+            <div id="analytics-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Analytics</h2>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <p class="text-gray-600">Analytics dashboard will be implemented here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/admin.js"></script>
+</body>
+</html>

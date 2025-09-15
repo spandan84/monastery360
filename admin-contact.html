@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Management - Monastery360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prayer: {
+                            blue: '#4F46E5',
+                            white: '#FFFFFF',
+                            red: '#DC2626',
+                            green: '#059669',
+                            yellow: '#D97706'
+                        },
+                        monastery: {
+                            gold: '#F59E0B',
+                            copper: '#B45309',
+                            crimson: '#991B1B',
+                            earth: '#92400E'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="font-inter bg-gray-50">
+    <!--
+    PROMPTS BLOCK:
+    "Enable admins to upload/edit monastery details, images, and 360° panoramas."
+    "Include moderation tools for approving or rejecting user-submitted content."
+    -->
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-prayer-blue">Monastery360</a>
+                    <span class="ml-4 px-3 py-1 bg-monastery-gold text-white text-sm rounded-full">Contact Manager</span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="admin-dashboard.html" class="text-gray-600 hover:text-prayer-blue">
+                        ← Back to Dashboard
+                    </a>
+                    <div class="relative">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 relative">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                            </svg>
+                            <span class="absolute -top-1 -right-1 bg-prayer-red text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">7</span>
+                        </button>
+                    </div>
+                    <div class="w-8 h-8 bg-monastery-gold rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                        AD
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Contact Management</h1>
+            <p class="text-gray-600">Manage user inquiries, monastery contact requests, and platform communications</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-prayer-red/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-prayer-red" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">7</div>
+                        <div class="text-sm text-gray-600">New Messages</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-monastery-gold/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-monastery-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">24</div>
+                        <div class="text-sm text-gray-600">Resolved</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-prayer-blue/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-prayer-blue" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">15</div>
+                        <div class="text-sm text-gray-600">Monastery Requests</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-prayer-green/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-prayer-green" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM12 13.5l3.5 2.5L12 18.5 8.5 16l3.5-2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">2.4h</div>
+                        <div class="text-sm text-gray-600">Avg Response</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter and Actions -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex space-x-4">
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                    <option>All Messages</option>
+                    <option>New</option>
+                    <option>In Progress</option>
+                    <option>Resolved</option>
+                </select>
+                
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue">
+                    <option>All Monasteries</option>
+                    <option>Rumtek Monastery</option>
+                    <option>Enchey Monastery</option>
+                    <option>Pemayangtse Monastery</option>
+                    <option>General Inquiries</option>
+                </select>
+            </div>
+
+            <div class="flex space-x-3">
+                <button class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    Export
+                </button>
+                <button class="px-4 py-2 bg-prayer-blue text-white rounded-lg hover:bg-prayer-blue/90 transition-colors">
+                    Send Announcement
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages List -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900">Recent Messages</h2>
+            </div>
+            
+            <div class="divide-y divide-gray-200">
+                <!-- Message 1 -->
+                <div class="p-6 hover:bg-gray-50 cursor-pointer" onclick="openMessage('msg1')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-prayer-blue/10 rounded-full flex items-center justify-center">
+                                <span class="text-prayer-blue font-semibold text-sm">AR</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <h3 class="font-medium text-gray-900">Arjun Rai</h3>
+                                    <span class="px-2 py-1 bg-prayer-red text-white text-xs rounded-full">New</span>
+                                    <span class="text-sm text-gray-500">Tourist</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Planning to visit Rumtek Monastery next month. Need information about accommodation and best time to visit for morning prayers.</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📍 Rumtek Monastery</span>
+                                    <span>📧 arjun.rai@email.com</span>
+                                    <span>⏰ 2 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Message 2 -->
+                <div class="p-6 hover:bg-gray-50 cursor-pointer" onclick="openMessage('msg2')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-monastery-gold/10 rounded-full flex items-center justify-center">
+                                <span class="text-monastery-gold font-semibold text-sm">PS</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <h3 class="font-medium text-gray-900">Dr. Priya Sharma</h3>
+                                    <span class="px-2 py-1 bg-monastery-gold text-white text-xs rounded-full">In Progress</span>
+                                    <span class="text-sm text-gray-500">Researcher</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Request for high-resolution scans of 15th century manuscripts from Pemayangtse archives. Working on Buddhist philosophy dissertation.</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📍 Pemayangtse Monastery</span>
+                                    <span>📧 p.sharma@university.edu</span>
+                                    <span>⏰ 5 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Message 3 -->
+                <div class="p-6 hover:bg-gray-50 cursor-pointer" onclick="openMessage('msg3')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-prayer-green/10 rounded-full flex items-center justify-center">
+                                <span class="text-prayer-green font-semibold text-sm">MJ</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <h3 class="font-medium text-gray-900">Michael Johnson</h3>
+                                    <span class="px-2 py-1 bg-prayer-green text-white text-xs rounded-full">Resolved</span>
+                                    <span class="text-sm text-gray-500">Student</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Thank you for organizing the meditation workshop. The experience was transformative. Looking forward to the next session.</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📍 Enchey Monastery</span>
+                                    <span>📧 m.johnson@email.com</span>
+                                    <span>⏰ 1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Message 4 -->
+                <div class="p-6 hover:bg-gray-50 cursor-pointer" onclick="openMessage('msg4')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-prayer-yellow/10 rounded-full flex items-center justify-center">
+                                <span class="text-prayer-yellow font-semibold text-sm">ST</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <h3 class="font-medium text-gray-900">Sarah Thompson</h3>
+                                    <span class="px-2 py-1 bg-prayer-red text-white text-xs rounded-full">New</span>
+                                    <span class="text-sm text-gray-500">Tourist</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Interested in participating in Losar Festival celebrations. Can you provide details about the ceremony schedule and visitor requirements?</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📍 General Inquiry</span>
+                                    <span>📧 sarah.t@email.com</span>
+                                    <span>⏰ 3 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Message 5 -->
+                <div class="p-6 hover:bg-gray-50 cursor-pointer" onclick="openMessage('msg5')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-prayer-red/10 rounded-full flex items-center justify-center">
+                                <span class="text-prayer-red font-semibold text-sm">RT</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <h3 class="font-medium text-gray-900">Rajesh Tamang</h3>
+                                    <span class="px-2 py-1 bg-prayer-red text-white text-xs rounded-full">New</span>
+                                    <span class="text-sm text-gray-500">Local Guide</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Reporting broken access road to Tashiding Monastery after recent landslide. Alternative route via Yuksom is longer but safe.</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📍 Tashiding Monastery</span>
+                                    <span>📧 r.tamang@guide.com</span>
+                                    <span>⏰ 4 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Detail Modal -->
+    <div id="message-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-prayer-blue/10 rounded-full flex items-center justify-center">
+                                <span class="text-prayer-blue font-semibold text-sm" id="modal-initials">AR</span>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-900" id="modal-sender">Arjun Rai</h2>
+                                <p class="text-sm text-gray-600" id="modal-email">arjun.rai@email.com</p>
+                            </div>
+                        </div>
+                        <button onclick="closeMessage()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <div class="mb-6">
+                        <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                            <span id="modal-monastery">📍 Rumtek Monastery</span>
+                            <span id="modal-time">⏰ 2 hours ago</span>
+                            <span id="modal-status" class="px-2 py-1 bg-prayer-red text-white text-xs rounded-full">New</span>
+                        </div>
+                        <div class="prose max-w-none">
+                            <p id="modal-message" class="text-gray-800">
+                                Planning to visit Rumtek Monastery next month. Need information about accommodation and best time to visit for morning prayers. Also interested in knowing if there are any special ceremonies during that time.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Response</h3>
+                        <textarea rows="4" 
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-prayer-blue" 
+                                  placeholder="Type your response..."></textarea>
+                        
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="flex items-center space-x-4">
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                                    <option>Assign to Monastery</option>
+                                    <option>Rumtek Monastery</option>
+                                    <option>Enchey Monastery</option>
+                                    <option>Pemayangtse Monastery</option>
+                                </select>
+                                
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                                    <option>Change Status</option>
+                                    <option>New</option>
+                                    <option>In Progress</option>
+                                    <option>Resolved</option>
+                                </select>
+                            </div>
+
+                            <div class="flex space-x-3">
+                                <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                    Save Draft
+                                </button>
+                                <button class="px-4 py-2 bg-prayer-blue text-white rounded-lg hover:bg-prayer-blue/90 transition-colors">
+                                    Send Reply
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/admin.js"></script>
+    <script>
+        function openMessage(messageId) {
+            // This would normally fetch message details from backend
+            document.getElementById('message-modal').classList.remove('hidden');
+        }
+
+        function closeMessage() {
+            document.getElementById('message-modal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('message-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMessage();
+            }
+        });
+    </script>
+</body>
+</html>
